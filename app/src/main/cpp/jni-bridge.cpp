@@ -55,6 +55,39 @@ Java_net_solvetheriddle_wavemaker_MainActivity_setFrequency(
     audioEngine->setFrequency(frequency);
 }
 
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_MainActivity_setAmplitude(
+        JNIEnv *env,
+        jobject /* this */,
+        jdouble amplitude) {
+    audioEngine->setAmplitude(amplitude);
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_MainActivity_callStatic(
+        JNIEnv *env,
+        jobject thisObj) {
+
+    // Get a class reference for this object
+    jclass thisClass = (*env).GetObjectClass(thisObj);
+
+    jmethodID midCallBackStr = (*env).GetMethodID(thisClass,
+                                                   "callback", "(Ljava/lang/String;)V");
+    if (NULL == midCallBackStr) return;
+    printf("In C, call back Java's called(String)\n");
+    jstring message = (*env).NewStringUTF("Hello from C");
+    (*env).CallVoidMethod(thisObj, midCallBackStr, message);
+
+//    jmethodID midCallBackStatic = (*env).GetStaticMethodID(thisClass,
+//                                                            "callbackStatic", "()Ljava/lang/String;");
+//    if (NULL == midCallBackStatic) return;
+//    jstring resultJNIStr = (*env).CallStaticObjectMethod(thisClass, midCallBackStatic);
+//    const char *resultCStr = (*env).GetStringUTFChars(resultJNIStr, NULL);
+//    if (NULL == resultCStr) return;
+//    printf("In C, the returned string is %s\n", resultCStr);
+//    (*env)->ReleaseStringUTFChars(env, resultJNIStr, resultCStr);
+}
+
 
 
 //JNIEXPORT void JNICALL

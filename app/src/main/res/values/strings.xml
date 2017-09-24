@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">WaveMaker</string>
-    <string name="tap_anywhere">Tap anywhere\n\nfrequency: %1$d</string>
+    <string name="tap_anywhere">Tap anywhere\n\nAudio data: %1$d</string>
 </resources>

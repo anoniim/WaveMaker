@@ -9,6 +9,7 @@ public:
     void stop();
     void setToneOn(bool isToneOn);
     void setFrequency(double frequency);
+    void setAmplitude(double amplitude);
 //    void setOutputListener(OutputListener outputListener);
 //    OutputListener *outputListener_;
 

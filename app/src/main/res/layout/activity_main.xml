@@ -6,18 +6,67 @@
     android:layout_height="match_parent"
     tools:context="net.solvetheriddle.wavemaker.MainActivity">
 
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/graph" />
+
     <TextView
-        android:id="@+id/frequency_text"
+        android:id="@+id/audio_data_text"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/tap_anywhere"
         android:textAppearance="@android:style/TextAppearance.Material.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/frequencyBar"
+        app:layout_constraintBottom_toTopOf="@+id/amplitudeBar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/graph" />
+
+    <TextView
+        android:id="@+id/amplitude_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="@string/tap_anywhere"
+        android:textAppearance="@android:style/TextAppearance.Material.Display1"
+        app:layout_constraintBottom_toTopOf="@+id/frequency_text"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <SeekBar
+        android:id="@+id/amplitudeBar"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:min="0"
+        android:max="30"
+        android:progress="3"
+        app:layout_constraintBottom_toTopOf="@id/frequencyBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/amplitude_text" />
+
+    <TextView
+        android:id="@+id/frequency_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="@string/tap_anywhere"
+        android:textAppearance="@android:style/TextAppearance.Material.Display1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <SeekBar
         android:id="@+id/frequencyBar"
@@ -31,7 +80,6 @@
         android:progress="440"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="475dp" />
+        app:layout_constraintStart_toEndOf="@id/frequency_text" />
 
 </android.support.constraint.ConstraintLayout>

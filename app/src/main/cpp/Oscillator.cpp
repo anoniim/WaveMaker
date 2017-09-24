@@ -2,7 +2,6 @@
 #include <math.h>
 
 #define TWO_PI (3.14159 * 2)
-#define AMPLITUDE 0.3
 
 void Oscillator::setSampleRate(int32_t sampleRate) {
     sampleRate_ = (double) sampleRate;
@@ -20,7 +19,7 @@ void Oscillator::render(float *audioData, int32_t numFrames) {
         if (isWaveOn_) {
 
             // Calculates the next sample value for the sine wave.
-            audioData[i] = (float) (sin(phase_) * AMPLITUDE);
+            audioData[i] = (float) (sin(phase_) * amplitude_);
 
             // Increments the phase, handling wrap around.
             phase_ += (TWO_PI * frequency_) / sampleRate_;
@@ -35,4 +34,8 @@ void Oscillator::render(float *audioData, int32_t numFrames) {
 
 void Oscillator::setFrequency(double frequency){
     frequency_ = frequency;
+}
+
+void Oscillator::setAmplitude(double amplitude){
+    amplitude_ = amplitude;
 }

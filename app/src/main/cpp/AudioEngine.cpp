@@ -62,6 +62,10 @@ void AudioEngine::setFrequency(double frequency) {
     oscillator_->setFrequency(frequency);
 }
 
+void AudioEngine::setAmplitude(double amplitude) {
+    oscillator_->setAmplitude(amplitude);
+}
+
 //void AudioEngine::setOutputListener(OutputListener outputListener) {
 //    outputListener_ = outputListener;
 //}
