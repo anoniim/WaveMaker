@@ -66,6 +66,10 @@ void AudioEngine::setAmplitude(double amplitude) {
     oscillator_->setAmplitude(amplitude);
 }
 
+void AudioEngine::setCallback(AudioCallback &callback) {
+    oscillator_->setCallback(callback);
+}
+
 //void AudioEngine::setOutputListener(OutputListener outputListener) {
 //    outputListener_ = outputListener;
 //}

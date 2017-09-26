@@ -9,6 +9,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView frequencyText;
     private static TextView audioDataText;
     private TextView amplitudeText;
+    private GraphView graph;
 
     private native void touchEvent(int action);
 
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private native void setAmplitude(double amplitude);
 
-    private native void callStatic();
+    private native void initCallback();
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -52,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 int motionEventAction = motionEvent.getAction();
                 touchEvent(motionEventAction);
+
+
+
                 return true;
             }
         };
@@ -99,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
         setFrequencyText(getFrequencyProgress());
         setAmplitudeText(getAmplitudeProgress());
 
+        graph = findViewById(R.id.graph);
 
-        GraphView graph = findViewById(R.id.graph);
-
+        initCallback();
         startEngine();
     }
 
@@ -117,8 +124,17 @@ public class MainActivity extends AppCompatActivity {
         return ((double) progress) / 10;
     }
 
-    public static void setAudioDataText(String data) {
-        audioDataText.setText(data);
+    public void setAudioDataText(float data) {
+
+//        for (int y = 0; y<data.length; y++){
+//            // FIXME This is overriding y value for each array of new values
+//            DataPoint dataPoint = new DataPoint(data[y], y);
+//            graph.addSeries(new LineGraphSeries(dataPoint));
+//        }
+
+//        runOnUiThread(() -> audioDataText.setText(String.valueOf(data[0])));
+
+        runOnUiThread(() -> audioDataText.setText(String.valueOf(data)));
     }
 
     private void setFrequencyText(int i) {

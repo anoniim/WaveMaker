@@ -30,6 +30,10 @@ void Oscillator::render(float *audioData, int32_t numFrames) {
             audioData[i] = 0;
         }
     }
+
+    // TODO pass audioData to Java
+//    callback_->run(audioData[0]);
+    callback_.printData(0);
 }
 
 void Oscillator::setFrequency(double frequency){
@@ -39,3 +43,11 @@ void Oscillator::setFrequency(double frequency){
 void Oscillator::setAmplitude(double amplitude){
     amplitude_ = amplitude;
 }
+
+void Oscillator::setCallback(AudioCallback callback) {
+    callback_ = callback;
+}
+
+//Oscillator::Oscillator() {
+//    callback_ = nullptr;
+//}

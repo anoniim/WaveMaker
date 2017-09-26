@@ -2,8 +2,10 @@
 #include <string>
 #include <android/input.h>
 #include "AudioEngine.h"
+#include "AudioCallback.h"
 
 static AudioEngine *audioEngine = new AudioEngine();
+//static Runnable *runnable = new Runnable();
 
 extern "C" {
 JNIEXPORT jstring
@@ -64,7 +66,7 @@ Java_net_solvetheriddle_wavemaker_MainActivity_setAmplitude(
 }
 
 JNIEXPORT void JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_callStatic(
+Java_net_solvetheriddle_wavemaker_MainActivity_initCallback(
         JNIEnv *env,
         jobject thisObj) {
 
@@ -72,33 +74,11 @@ Java_net_solvetheriddle_wavemaker_MainActivity_callStatic(
     jclass thisClass = (*env).GetObjectClass(thisObj);
 
     jmethodID midCallBackStr = (*env).GetMethodID(thisClass,
-                                                   "callback", "(Ljava/lang/String;)V");
+                                                   "setAudioDataText", "(F)V");
     if (NULL == midCallBackStr) return;
-    printf("In C, call back Java's called(String)\n");
-    jstring message = (*env).NewStringUTF("Hello from C");
-    (*env).CallVoidMethod(thisObj, midCallBackStr, message);
 
-//    jmethodID midCallBackStatic = (*env).GetStaticMethodID(thisClass,
-//                                                            "callbackStatic", "()Ljava/lang/String;");
-//    if (NULL == midCallBackStatic) return;
-//    jstring resultJNIStr = (*env).CallStaticObjectMethod(thisClass, midCallBackStatic);
-//    const char *resultCStr = (*env).GetStringUTFChars(resultJNIStr, NULL);
-//    if (NULL == resultCStr) return;
-//    printf("In C, the returned string is %s\n", resultCStr);
-//    (*env)->ReleaseStringUTFChars(env, resultJNIStr, resultCStr);
+    AudioCallback callback(*env, thisObj, midCallBackStr);
+    audioEngine->setCallback(callback);
 }
-
-
-
-//JNIEXPORT void JNICALL
-//Java_net_solvetheriddle_wavemaker_MainActivity_setOutputListener(
-//        JNIEnv *env,
-//        jobject obj,
-//        jobject outputListener) {
-//    jclass listenerClass = (*env).GetObjectClass(outputListener);
-//    jmethodID outputMethod = env->GetMethodID(listenerClass, "outputMethod", "(F)V");
-//    env->CallVoidMethod(outputListener, outputMethod, output);
-//    audioEngine->setOutputListener(outputListener);
-//}
 
 }
