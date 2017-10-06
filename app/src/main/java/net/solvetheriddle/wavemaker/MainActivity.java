@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         View.OnTouchListener onTouchListener = (view, motionEvent) -> {
             int motionEventAction = motionEvent.getAction();
             if (soundLockSwitch.isChecked()) {
+                // Reverse the function of the Play button
                 motionEventAction = Math.abs(motionEventAction - 1);
             }
             touchEvent(motionEventAction);
