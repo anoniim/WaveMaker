@@ -1,5 +1,6 @@
 #include "Oscillator.h"
 #include <math.h>
+#include <stdio.h>
 
 #define TWO_PI (3.14159 * 2)
 
@@ -9,7 +10,8 @@ void Oscillator::setSampleRate(int32_t sampleRate) {
 
 void Oscillator::setWaveOn(bool isWaveOn) {
     isWaveOn_ = isWaveOn;
-    if (!isWaveOn) phase_ = 0;
+    if (!isWaveOn) phaseA_ = 0;
+    if (!isWaveOn) phaseB_ = 0;
 }
 
 void Oscillator::render(float *audioData, int32_t numFrames) {
@@ -19,11 +21,16 @@ void Oscillator::render(float *audioData, int32_t numFrames) {
         if (isWaveOn_) {
 
             // Calculates the next sample value for the sine wave.
-            audioData[i] = (float) (sin(phase_) * amplitude_);
+            float sampleValueA = (float) (sin(phaseA_) * amplitudeA_);
+            float sampleValueB = (float) (sin(phaseB_) * amplitudeB_);
+            audioData[i] = sampleValueA + sampleValueB;
 
             // Increments the phase, handling wrap around.
-            phase_ += (TWO_PI * frequency_) / sampleRate_;
-            if (phase_ > TWO_PI) phase_ -= TWO_PI;
+            phaseA_ += (TWO_PI * frequencyA_) / sampleRate_;
+            if (phaseA_ > TWO_PI) phaseA_ -= TWO_PI;
+
+            phaseB_ += (TWO_PI * frequencyB_) / sampleRate_;
+            if (phaseB_ > TWO_PI) phaseB_ -= TWO_PI;
 
         } else {
             // Outputs silence by setting sample value to zero.
@@ -31,22 +38,33 @@ void Oscillator::render(float *audioData, int32_t numFrames) {
         }
     }
 
+//    // TODO pass audioData to Java
+////    callback_->run(audioData[0]);
+//    jni_send_audio(audioData, numFrames);
+}
+
+void Oscillator::setFrequencyA(double frequency){
+    frequencyA_ = frequency;
     // TODO pass audioData to Java
 //    callback_->run(audioData[0]);
-    callback_.printData(0);
+//    jni_send_audio(NULL, NULL);
 }
 
-void Oscillator::setFrequency(double frequency){
-    frequency_ = frequency;
+void Oscillator::setAmplitudeA(double amplitude){
+    amplitudeA_ = amplitude;
 }
 
-void Oscillator::setAmplitude(double amplitude){
-    amplitude_ = amplitude;
+void Oscillator::setFrequencyB(jdouble frequency) {
+    frequencyB_ = frequency;
 }
 
-void Oscillator::setCallback(AudioCallback callback) {
-    callback_ = callback;
+void Oscillator::setAmplitudeB(jdouble amplitude) {
+    amplitudeB_ = amplitude;
 }
+
+//void Oscillator::setCallback(AudioCallback callback) {
+//    callback_ = callback;
+//}
 
 //Oscillator::Oscillator() {
 //    callback_ = nullptr;

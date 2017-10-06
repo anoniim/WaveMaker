@@ -9,12 +9,16 @@ public:
     bool start();
     void stop();
     void setToneOn(bool isToneOn);
-    void setFrequency(double frequency);
-    void setAmplitude(double amplitude);
+    void setFrequencyA(double frequency);
+    void setAmplitudeA(double amplitude);
 //    void setOutputListener(OutputListener outputListener);
 //    OutputListener *outputListener_;
 
-    void setCallback(AudioCallback &callback);
+//    void setCallback(AudioCallback &callback);
+
+    void setFrequencyB(jdouble d);
+
+    void setAmplitudeB(jdouble d);
 
 private:
     Oscillator *oscillator_;

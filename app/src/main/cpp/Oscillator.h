@@ -7,16 +7,23 @@ public:
     void setWaveOn(bool isWaveOn);
     void setSampleRate(int32_t sampleRate);
     void render(float *audioData, int32_t numFrames);
-    void setFrequency(double frequency);
-    void setAmplitude(double amplitude);
+    void setFrequencyA(double frequency);
+    void setAmplitudeA(double amplitude);
 
-    void setCallback(AudioCallback callback);
+//    void setCallback(AudioCallback callback);
+
+    void setFrequencyB(jdouble frequency);
+
+    void setAmplitudeB(jdouble amplitude);
 
 private:
     bool isWaveOn_ = false;
-    double phase_ = 0.0;
     double sampleRate_ = 0.0;
-    double frequency_ = 440.0;
-    double amplitude_ = 0.3;
-    AudioCallback callback_;
+    double phaseA_ = 0.0;
+    double frequencyA_ = 440.0;
+    double amplitudeA_ = 0.3;
+    double phaseB_ = 0.0;
+    double frequencyB_ = 440.0;
+    double amplitudeB_ = 0.3;
+//    AudioCallback callback_;
 };

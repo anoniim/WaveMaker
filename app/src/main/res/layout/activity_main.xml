@@ -4,82 +4,185 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.solvetheriddle.wavemaker.MainActivity">
+    tools:context="net.solvetheriddle.wavemaker.MainActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
     <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
         android:layout_width="0dp"
         android:layout_height="200dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/graph" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/audio_data_text"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/tap_anywhere"
         android:textAppearance="@android:style/TextAppearance.Material.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/amplitudeBar"
+        app:layout_constraintBottom_toTopOf="@+id/a_switch"
+        app:layout_constraintEnd_toStartOf="@+id/sound_lock_switch"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/graph" />
 
-    <TextView
-        android:id="@+id/amplitude_text"
+    <Switch
+        android:id="@+id/sound_lock_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:gravity="center"
-        android:text="@string/tap_anywhere"
-        android:textAppearance="@android:style/TextAppearance.Material.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/frequency_text"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <SeekBar
-        android:id="@+id/amplitudeBar"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:min="0"
-        android:max="30"
-        android:progress="3"
-        app:layout_constraintBottom_toTopOf="@id/frequencyBar"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/audio_data_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/amplitude_text" />
+        app:layout_constraintTop_toTopOf="@+id/audio_data_text" />
 
-    <TextView
-        android:id="@+id/frequency_text"
+
+    <Switch
+        android:id="@+id/a_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:gravity="center"
-        android:text="@string/tap_anywhere"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="A"
         android:textAppearance="@android:style/TextAppearance.Material.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/a_frequency_bar"
+        app:layout_constraintEnd_toEndOf="@+id/a_amplitude_bar"
+        app:layout_constraintStart_toStartOf="@+id/a_frequency_bar" />
 
-    <SeekBar
-        android:id="@+id/frequencyBar"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
+    <net.solvetheriddle.wavemaker.widget.VerticalSeekBar
+        android:id="@+id/a_frequency_bar"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:max="999"
         android:min="0"
-        android:max="1760"
+        android:orientation="vertical"
         android:progress="440"
+        app:layout_constraintBottom_toTopOf="@+id/a_frequency_text"
+        app:layout_constraintEnd_toEndOf="@+id/a_frequency_text"
+        app:layout_constraintStart_toStartOf="@+id/a_frequency_text" />
+
+    <TextView
+        android:id="@+id/a_frequency_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="440"
+        android:textAppearance="@android:style/TextAppearance.Material.Display1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/frequency_text" />
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <net.solvetheriddle.wavemaker.widget.VerticalSeekBar
+        android:id="@+id/a_amplitude_bar"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:max="30"
+        android:min="0"
+        android:orientation="vertical"
+        android:progress="3"
+        app:layout_constraintBottom_toTopOf="@+id/a_amplitude_text"
+        app:layout_constraintEnd_toEndOf="@+id/a_amplitude_text"
+        app:layout_constraintStart_toStartOf="@+id/a_amplitude_text" />
+
+    <TextView
+        android:id="@+id/a_amplitude_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="0.3"
+        android:textAppearance="@android:style/TextAppearance.Material.Display1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/a_frequency_text" />
+
+    <Switch
+        android:id="@+id/b_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="B"
+        android:textAppearance="@android:style/TextAppearance.Material.Display1"
+        app:layout_constraintBottom_toTopOf="@+id/b_frequency_bar"
+        app:layout_constraintEnd_toEndOf="@+id/b_amplitude_bar"
+        app:layout_constraintStart_toStartOf="@+id/b_frequency_bar" />
+
+    <net.solvetheriddle.wavemaker.widget.VerticalSeekBar
+        android:id="@+id/b_frequency_bar"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:max="999"
+        android:min="0"
+        android:orientation="vertical"
+        android:progress="440"
+        app:layout_constraintBottom_toTopOf="@+id/b_frequency_text"
+        app:layout_constraintEnd_toEndOf="@+id/b_frequency_text"
+        app:layout_constraintStart_toStartOf="@+id/b_frequency_text" />
+
+    <TextView
+        android:id="@+id/b_frequency_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="440"
+        android:textAppearance="@android:style/TextAppearance.Material.Display1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/a_amplitude_text" />
+
+    <net.solvetheriddle.wavemaker.widget.VerticalSeekBar
+        android:id="@+id/b_amplitude_bar"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:max="30"
+        android:min="0"
+        android:orientation="vertical"
+        android:progress="3"
+        app:layout_constraintBottom_toTopOf="@+id/b_amplitude_text"
+        app:layout_constraintEnd_toEndOf="@+id/b_amplitude_text"
+        app:layout_constraintStart_toStartOf="@+id/b_amplitude_text" />
+
+    <TextView
+        android:id="@+id/b_amplitude_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="0.3"
+        android:textAppearance="@android:style/TextAppearance.Material.Display1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/b_frequency_text" />
+
+
 
 </android.support.constraint.ConstraintLayout>

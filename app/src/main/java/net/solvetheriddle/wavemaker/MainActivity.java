@@ -3,15 +3,14 @@ package net.solvetheriddle.wavemaker;
 import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.DataPointInterface;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,12 +21,17 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
-    private SeekBar frequencyBar;
-    private SeekBar amplitudeBar;
-    private TextView frequencyText;
     private static TextView audioDataText;
-    private TextView amplitudeText;
+    private SeekBar aFrequencyBar;
+    private TextView aFrequencyText;
+    private SeekBar aAmplitudeBar;
+    private TextView aAmplitudeText;
+    private SeekBar bFrequencyBar;
+    private TextView bAmplitudeText;
+    private SeekBar bAmplitudeBar;
+    private TextView bFrequencyText;
     private GraphView graph;
+    private Switch soundLockSwitch;
 
     private native void touchEvent(int action);
 
@@ -35,9 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
     private native void stopEngine();
 
-    private native void setFrequency(double frequency);
+    private native void setFrequencyA(double frequency);
 
-    private native void setAmplitude(double amplitude);
+    private native void setAmplitudeA(double amplitude);
+
+    private native void setFrequencyB(double frequency);
+
+    private native void setAmplitudeB(double amplitude);
 
     private native void initCallback();
 
@@ -48,28 +56,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         audioDataText = findViewById(R.id.audio_data_text);
-        amplitudeText = findViewById(R.id.amplitude_text);
-        frequencyText = findViewById(R.id.frequency_text);
+        soundLockSwitch = findViewById(R.id.sound_lock_switch);
+        aAmplitudeText = findViewById(R.id.a_amplitude_text);
+        aFrequencyText = findViewById(R.id.a_frequency_text);
+        bAmplitudeText = findViewById(R.id.b_amplitude_text);
+        bFrequencyText = findViewById(R.id.b_frequency_text);
 
-        View.OnTouchListener onTouchListener = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                int motionEventAction = motionEvent.getAction();
-                touchEvent(motionEventAction);
-
-
-
-                return true;
+        View.OnTouchListener onTouchListener = (view, motionEvent) -> {
+            int motionEventAction = motionEvent.getAction();
+            if (soundLockSwitch.isChecked()) {
+                motionEventAction = Math.abs(motionEventAction - 1);
             }
+            touchEvent(motionEventAction);
+            return true;
         };
         audioDataText.setOnTouchListener(onTouchListener);
+//        soundLockSwitch.setOnCheckedChangeListener((compoundButton, b) -> );
 
-        frequencyBar = findViewById(R.id.frequencyBar);
-        frequencyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        aFrequencyBar = findViewById(R.id.a_frequency_bar);
+        aFrequencyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                setFrequency(i);
-                setFrequencyText(i);
+                setFrequencyA(i);
+                setAFrequencyText(i);
             }
 
             @Override
@@ -83,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        amplitudeBar = findViewById(R.id.amplitudeBar);
-        amplitudeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        aAmplitudeBar = findViewById(R.id.a_amplitude_bar);
+        aAmplitudeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 double amplitude = progressToDouble(i);
-                setAmplitude(amplitude);
-                setAmplitudeText(amplitude);
+                setAmplitudeA(amplitude);
+                setAAmplitudeText(amplitude);
             }
 
             @Override
@@ -103,8 +112,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setFrequencyText(getFrequencyProgress());
-        setAmplitudeText(getAmplitudeProgress());
+        bFrequencyBar = findViewById(R.id.b_frequency_bar);
+        bFrequencyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                setFrequencyB(i);
+                setBFrequencyText(i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        bAmplitudeBar = findViewById(R.id.b_amplitude_bar);
+        bAmplitudeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                double amplitude = progressToDouble(i);
+                setAmplitudeB(amplitude);
+                setBAmplitudeText(amplitude);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        setAFrequencyText(getProgress(aFrequencyBar));
+        setAAmplitudeText(getAmplitudeProgress(aAmplitudeBar));
+        setBFrequencyText(getProgress(bFrequencyBar));
+        setBAmplitudeText(getAmplitudeProgress(bAmplitudeBar));
 
         graph = findViewById(R.id.graph);
 
@@ -112,19 +162,36 @@ public class MainActivity extends AppCompatActivity {
         startEngine();
     }
 
-    private int getFrequencyProgress() {
-        return frequencyBar.getProgress();
+    private int getProgress(SeekBar seekBar) {
+        return seekBar.getProgress();
     }
 
-    private double getAmplitudeProgress() {
-        return progressToDouble(amplitudeBar.getProgress());
+    private double getAmplitudeProgress(SeekBar amplitudeBar) {
+        return progressToDouble(getProgress(amplitudeBar));
     }
 
     private double progressToDouble(int progress) {
         return ((double) progress) / 10;
     }
 
-    public void setAudioDataText(float data) {
+    private void setAFrequencyText(int i) {
+        aFrequencyText.setText(String.valueOf(i));
+    }
+
+    private void setAAmplitudeText(double i) {
+        aAmplitudeText.setText(String.valueOf(i));
+    }
+
+    private void setBFrequencyText(int i) {
+        bFrequencyText.setText(String.valueOf(i));
+    }
+
+    private void setBAmplitudeText(double i) {
+        bAmplitudeText.setText(String.valueOf(i));
+    }
+
+    public static void OnRender(float[] data) {
+
 
 //        for (int y = 0; y<data.length; y++){
 //            // FIXME This is overriding y value for each array of new values
@@ -132,18 +199,20 @@ public class MainActivity extends AppCompatActivity {
 //            graph.addSeries(new LineGraphSeries(dataPoint));
 //        }
 
+        if (data == null) {
+            Log.wtf("JAVA", "null but works");
+        }
+        Log.wtf("JAVA", String.valueOf(data[0]));
+
 //        runOnUiThread(() -> audioDataText.setText(String.valueOf(data[0])));
 
-        runOnUiThread(() -> audioDataText.setText(String.valueOf(data)));
+//        runOnUiThread(() -> audioDataText.setText(String.valueOf(data)));
     }
 
-    private void setFrequencyText(int i) {
-        frequencyText.setText(String.valueOf(i));
+    public static void setText(String message) {
+        audioDataText.setText(String.valueOf(message));
     }
 
-    private void setAmplitudeText(double i) {
-        amplitudeText.setText(String.valueOf(i));
-    }
 
     @Override
     public void onDestroy() {
