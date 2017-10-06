@@ -94,7 +94,7 @@ Java_net_solvetheriddle_wavemaker_MainActivity_stopEngine(
 //    env->DeleteGlobalRef(jAudioData);
 //    jAudioData = NULL;
 
-    g_VM->DetachCurrentThread();
+//    g_VM->DetachCurrentThread();
 }
 
 JNIEXPORT void JNICALL
