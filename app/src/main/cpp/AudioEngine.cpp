@@ -58,20 +58,36 @@ void AudioEngine::setToneOn(bool isToneOn) {
     oscillator_->setWaveOn(isToneOn);
 }
 
-void AudioEngine::setFrequencyA(double frequency) {
-    oscillator_->setFrequencyA(frequency);
+void AudioEngine::setAmpFundamental(double frequency) {
+    oscillator_->setAmpTonic(frequency);
 }
 
-void AudioEngine::setAmplitudeA(double amplitude) {
-    oscillator_->setAmplitudeA(amplitude);
+void AudioEngine::setAmp2x(double amplitude) {
+    oscillator_->setAmp2x(amplitude);
 }
 
-void AudioEngine::setFrequencyB(jdouble frequency) {
-    oscillator_->setFrequencyB(frequency);
+void AudioEngine::setAmp3x(jdouble frequency) {
+    oscillator_->setAmp3x(frequency);
 }
 
-void AudioEngine::setAmplitudeB(jdouble amplitude) {
-    oscillator_->setAmplitudeB(amplitude);
+void AudioEngine::setAmp4x(jdouble amplitude) {
+    oscillator_->setAmp4x(amplitude);
+}
+
+void AudioEngine::setAmp5x(jdouble amplitude) {
+    oscillator_->setAmp5x(amplitude);
+}
+
+void AudioEngine::setAmp6x(jdouble amplitude) {
+    oscillator_->setAmp6x(amplitude);
+}
+
+void AudioEngine::setAmp7x(jdouble amplitude) {
+    oscillator_->setAmp7x(amplitude);
+}
+
+void AudioEngine::setAmp8x(jdouble amplitude) {
+    oscillator_->setAmp8x(amplitude);
 }
 
 //void AudioEngine::setCallback(AudioCallback &callback) {

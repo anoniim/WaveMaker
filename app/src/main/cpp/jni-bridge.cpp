@@ -52,7 +52,7 @@ extern "C" {
 JNIEXPORT jstring
 
 JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_stringFromJNI(
+Java_net_solvetheriddle_wavemaker_AudioEngine_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
@@ -60,83 +60,13 @@ Java_net_solvetheriddle_wavemaker_MainActivity_stringFromJNI(
 }
 
 JNIEXPORT void JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_touchEvent(
-        JNIEnv *env,
-        jobject obj,
-        jint action) {
-    switch (action) {
-        case AMOTION_EVENT_ACTION_DOWN:
-            audioEngine->setToneOn(true);
-            break;
-        case AMOTION_EVENT_ACTION_UP:
-            audioEngine->setToneOn(false);
-            break;
-        default:
-            break;
-    }
-}
-
-JNIEXPORT void JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_startEngine(
-        JNIEnv *env,
-        jobject /* this */) {
-    audioEngine->start();
-}
-
-JNIEXPORT void JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_stopEngine(
-        JNIEnv *env,
-        jobject /* this */) {
-    audioEngine->stop();
-
-    // CLEAN UP
-    // Free global array
-//    env->DeleteGlobalRef(jAudioData);
-//    jAudioData = NULL;
-
-//    g_VM->DetachCurrentThread();
-}
-
-JNIEXPORT void JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_setFrequencyA(
-        JNIEnv *env,
-        jobject /* this */,
-        jdouble frequency) {
-    audioEngine->setFrequencyA(frequency);
-}
-
-JNIEXPORT void JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_setAmplitudeA(
-        JNIEnv *env,
-        jobject /* this */,
-        jdouble amplitude) {
-    audioEngine->setAmplitudeA(amplitude);
-}
-
-JNIEXPORT void JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_setFrequencyB(
-        JNIEnv *env,
-        jobject /* this */,
-        jdouble frequency) {
-    audioEngine->setFrequencyB(frequency);
-}
-
-JNIEXPORT void JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_setAmplitudeB(
-        JNIEnv *env,
-        jobject /* this */,
-        jdouble amplitude) {
-    audioEngine->setAmplitudeB(amplitude);
-}
-
-JNIEXPORT void JNICALL
-Java_net_solvetheriddle_wavemaker_MainActivity_initCallback(
+Java_net_solvetheriddle_wavemaker_AudioEngine_initCallback(
         JNIEnv *env,
         jobject thisObj) {
 
 
     jint getJavaVMStatus = (*env).GetJavaVM(&g_VM);
-    if(getJavaVMStatus == 0){
+    if (getJavaVMStatus == 0) {
         logInJava("g_VM should be set");
     } else {
         logInJava("g_VM NOT set");
@@ -153,12 +83,12 @@ Java_net_solvetheriddle_wavemaker_MainActivity_initCallback(
 
     jAudioData = (*env).NewFloatArray(1442); // TODO get the size from AudioEngine
 
-    
-    
-    
+
+
+
     setTextMethod = (*env).GetStaticMethodID(jNativesCls,
-                                                           "setText",
-                                                           "(Ljava/lang/String;)V");
+                                             "setText",
+                                             "(Ljava/lang/String;)V");
     if (NULL == setTextMethod) return;
     message = (*env).NewStringUTF("Hello from C");
 
@@ -175,6 +105,109 @@ Java_net_solvetheriddle_wavemaker_MainActivity_initCallback(
 //    printf("In C, the returned string is %s\n", resultCStr);
 //    (*env).CallStaticVoidMethod(thisClass, midCallBackStatic, message);
 
+}
+
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_startEngine(
+        JNIEnv *env,
+        jobject /* this */) {
+    audioEngine->start();
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_stopEngine(
+        JNIEnv *env,
+        jobject /* this */) {
+    audioEngine->stop();
+
+    // CLEAN UP
+    // Free global array
+//    env->DeleteGlobalRef(jAudioData);
+//    jAudioData = NULL;
+
+//    g_VM->DetachCurrentThread();
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_onPlayTouch(
+        JNIEnv *env,
+        jobject obj,
+        jint action) {
+    switch (action) {
+        case AMOTION_EVENT_ACTION_DOWN:
+            audioEngine->setToneOn(true);
+            break;
+        case AMOTION_EVENT_ACTION_UP:
+            audioEngine->setToneOn(false);
+            break;
+        default:
+            break;
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_setAmpFundamental(
+        JNIEnv *env,
+        jobject /* this */,
+        jdouble frequency) {
+    audioEngine->setAmpFundamental(frequency);
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_setAmp2x(
+        JNIEnv *env,
+        jobject /* this */,
+        jdouble amplitude) {
+    audioEngine->setAmp2x(amplitude);
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_setAmp3x(
+        JNIEnv *env,
+        jobject /* this */,
+        jdouble frequency) {
+    audioEngine->setAmp3x(frequency);
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_setAmp4x(
+        JNIEnv *env,
+        jobject /* this */,
+        jdouble amplitude) {
+    audioEngine->setAmp4x(amplitude);
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_setAmp5x(
+        JNIEnv *env,
+        jobject /* this */,
+        jdouble amplitude) {
+    audioEngine->setAmp5x(amplitude);
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_setAmp6x(
+        JNIEnv *env,
+        jobject /* this */,
+        jdouble amplitude) {
+    audioEngine->setAmp6x(amplitude);
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_setAmp7x(
+        JNIEnv *env,
+        jobject /* this */,
+        jdouble amplitude) {
+    audioEngine->setAmp7x(amplitude);
+}
+
+JNIEXPORT void JNICALL
+Java_net_solvetheriddle_wavemaker_AudioEngine_setAmp8x(
+        JNIEnv *env,
+        jobject /* this */,
+        jdouble amplitude) {
+    audioEngine->setAmp8x(amplitude);
 }
 
 

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="net.solvetheriddle.wavemaker.MainActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <net.solvetheriddle.wavemaker.VerticalSeekBar
+        android:id="@+id/amp_bar_fundamental"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:min="0"
+        android:progress="100"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
+        app:layout_constraintEnd_toStartOf="@+id/amp_bar_2x"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/graph" />
+
+    <net.solvetheriddle.wavemaker.VerticalSeekBar
+        android:id="@+id/amp_bar_2x"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:min="0"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
+        app:layout_constraintEnd_toStartOf="@+id/amp_bar_3x"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/amp_bar_fundamental"
+        app:layout_constraintTop_toBottomOf="@+id/graph" />
+
+    <net.solvetheriddle.wavemaker.VerticalSeekBar
+        android:id="@+id/amp_bar_3x"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:min="0"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
+        app:layout_constraintEnd_toStartOf="@+id/amp_bar_4x"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/amp_bar_2x"
+        app:layout_constraintTop_toBottomOf="@+id/graph" />
+
+    <net.solvetheriddle.wavemaker.VerticalSeekBar
+        android:id="@+id/amp_bar_4x"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:min="0"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
+        app:layout_constraintEnd_toStartOf="@+id/amp_bar_5x"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/amp_bar_3x"
+        app:layout_constraintTop_toBottomOf="@+id/graph" />
+
+    <net.solvetheriddle.wavemaker.VerticalSeekBar
+        android:id="@+id/amp_bar_5x"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:min="0"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
+        app:layout_constraintEnd_toStartOf="@+id/amp_bar_6x"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/amp_bar_4x"
+        app:layout_constraintTop_toBottomOf="@+id/graph" />
+
+    <net.solvetheriddle.wavemaker.VerticalSeekBar
+        android:id="@+id/amp_bar_6x"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:min="0"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
+        app:layout_constraintEnd_toStartOf="@id/amp_bar_7x"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/amp_bar_5x"
+        app:layout_constraintTop_toBottomOf="@+id/graph" />
+
+    <net.solvetheriddle.wavemaker.VerticalSeekBar
+        android:id="@+id/amp_bar_7x"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:min="0"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
+        app:layout_constraintEnd_toStartOf="@id/amp_bar_8x"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/amp_bar_6x"
+        app:layout_constraintTop_toBottomOf="@+id/graph" />
+
+    <net.solvetheriddle.wavemaker.VerticalSeekBar
+        android:id="@+id/amp_bar_8x"
+        android:layout_width="@dimen/seeker_bar_width"
+        android:layout_height="@dimen/seeker_bar_length"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:min="0"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/amp_bar_7x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/graph" />
+
+    <Button
+        android:id="@+id/play_button"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/play_lock_switch"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Switch
+        android:id="@+id/play_lock_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/play_button"
+        app:layout_constraintTop_toTopOf="@+id/play_button" />
+
+
+</android.support.constraint.ConstraintLayout>

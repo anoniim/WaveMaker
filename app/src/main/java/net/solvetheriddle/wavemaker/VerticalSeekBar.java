@@ -1,4 +1,4 @@
-package net.solvetheriddle.wavemaker.widget;
+package net.solvetheriddle.wavemaker;
 
 import android.content.Context;
 import android.graphics.Canvas;

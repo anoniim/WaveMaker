@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "net.solvetheriddle.wavemaker"
         minSdkVersion 26
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -33,13 +33,33 @@ android {
     }
 }
 
+ext {
+    supportLibVersion = '26.1.0'
+    dagger2Version = '2.10'
+    butterKnifeVersion = '8.5.1'
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:26.0.2'
-    testImplementation 'junit:junit:4.12'
+
+    // Android
+    implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    // Dagger 2
+    compile "com.google.dagger:dagger:$dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2Version"
+    provided "javax.annotation:jsr250-api:1.0"
+
+    // Butter Knife
+    compile "com.jakewharton:butterknife:$butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+
+    // Graph View
     compile 'com.jjoe64:graphview:4.2.1'
+
+    testImplementation 'junit:junit:4.12'
 }
